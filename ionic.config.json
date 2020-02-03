@@ -1,0 +1,7 @@
+{
+  "name": "JALibrary",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
