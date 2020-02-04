@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import {CookieService} from 'ngx-cookie-service';
 import { AlertController } from '@ionic/angular';
-import { UserProfile } from '../Models/UserProfile';
+import { Book } from '../Models/Book';
 
 import { BookService } from '../../Services/book.service';
 import {TabsPage} from '../tabs/tabs.page';
@@ -15,6 +15,8 @@ import {TabsPage} from '../tabs/tabs.page';
 export class Tab1Page {
 
   isAvailable:any;
+  isItemAvailable:any = false;
+  bookFiltertedList:any;
   constructor(public navCtrl : NavController, public BookServices:BookService, public cookie:CookieService, public alertController:AlertController, public tabs:TabsPage) {
     this.showAllAvailableBooks();
 
@@ -24,10 +26,6 @@ export class Tab1Page {
   showAllAvailableBooks(){
     this.BookServices.AllAvailableBooks().subscribe(res=> {
       this.booksAvailable = res;
-      // for (let index = 0; index < this.booksAvailable.length; index++) {
-      //   this.booksAvailable[index].isAvailable = false;       
-      // }
-      console.log(this.booksAvailable);
     })
   }
 
@@ -74,5 +72,17 @@ export class Tab1Page {
         (await alert).present();
       }
     })
+  }
+
+  getItems(ev:any)
+  {
+    const value = ev.target.value;
+    if(value && value.trim()!=''){
+      this.isItemAvailable = true;
+      this.bookFiltertedList = this.booksAvailable.filter((book:Book) => !book.title.toLowerCase().search(value.toLowerCase()));
+    }
+    else{
+      this.isItemAvailable = false;
+    }
   }
 }

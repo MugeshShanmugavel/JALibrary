@@ -1,25 +1,35 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Available Books
+      <h2 style="text-align:center" ><i><b>Available Books</b></i></h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-searchbar type="text" debounce="500" (ionChange)="getItems($event)"></ion-searchbar>
+<ion-list *ngIf="isItemAvailable">
+  <ion-item *ngFor = "let book of bookFiltertedList " class="item item-block">
+    <div class="item-inner">
+      <div class="input-wrapper">
+        <p>Name : {{book.title}}</p>
+        <p>Author: {{book.author}}</p>
+      </div>
+    </div>
+    <div style="margin-left: auto;">
+      <ion-button clear (click)="CheckAvailability(book)" >
+        <span class="button-inner">CheckAvailability</span>
+      </ion-button>
+    </div>
+  </ion-item>
+</ion-list>
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor = "let book of booksAvailable" lass="item item-block" item-start>
+  <ion-list *ngIf="!isItemAvailable">
+    <ion-item *ngFor = "let book of booksAvailable" class="item item-block" item-start>
       <div class="item-inner">
         <div class="input-wrapper">
           <p>Name : {{book.title}}</p>
           <p>Author: {{book.author}}</p>
         </div>
       </div>
-      <!-- <div style="margin-left: auto;" *ngIf="book.isAvailable">
-        <ion-button clear (click)="borrow(book)" >
-          <span class="button-inner">Borrow</span>
-        </ion-button>
-      </div> -->
       <div style="margin-left: auto;">
         <ion-button clear (click)="CheckAvailability(book)" >
           <span class="button-inner">CheckAvailability</span>

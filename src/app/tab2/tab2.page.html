@@ -8,9 +8,18 @@
 
 <ion-content style="background-image: url('../../assets/icons/Logo-image.png');">
 <ion-list>
-  <ion-item *ngFor = "let item of books">
-    <h5>{{item.title}}</h5>
-    <ion-button item-end (click)="return(item.isbn)">Return</ion-button>
+  <ion-item *ngFor = "let item of books"  class="item item-block" item-start>
+    <div class="item-inner">
+      <div class="input-wrapper">
+        <h5>{{item.title}}</h5>
+        <p>{{item.borrowDate}}</p>
+      </div>
+    </div>
+    <div style="margin-left: auto;">
+    <ion-button item-end (click)="return(item.isbn)">
+      <span class="button-inner">Return</span>
+    </ion-button>
+    </div>
   </ion-item>
 </ion-list>
 </ion-content>
