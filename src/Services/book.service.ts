@@ -48,4 +48,9 @@ export class BookService {
     const user = new UserProfile(userId, userName);
     this.http.post('https://ja-library.azurewebsites.net/api/Users/add',user).subscribe(res => res);
   }
+
+  CheckAvailability(isbn:string)
+  {
+    return this.http.get('https://ja-library.azurewebsites.net/checkAvailability/'+isbn);
+  }
 }

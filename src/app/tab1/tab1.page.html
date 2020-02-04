@@ -5,13 +5,7 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
-<!-- <ion-content>
-  <ion-icon slot="start" color="medium" name="book"></ion-icon>
-  <ion-label>Ionic Documentation</ion-label>
-  <ion-input type="text" [(ngModel)]="isbn" placeholder="Enter Isbn"></ion-input>
-  <ion-button (click)=scan(isbn)></ion-button>
-</ion-content> -->
+<ion-searchbar type="text" debounce="500" (ionChange)="getItems($event)"></ion-searchbar>
 <ion-content>
   <ion-list>
     <ion-item *ngFor = "let book of booksAvailable" lass="item item-block" item-start>
@@ -21,9 +15,16 @@
           <p>Author: {{book.author}}</p>
         </div>
       </div>
-      <ion-button clear (click)="borrow(book)" style="margin-left: auto;">
-        <span class="button-inner">Borrow</span>
-      </ion-button>
+      <!-- <div style="margin-left: auto;" *ngIf="book.isAvailable">
+        <ion-button clear (click)="borrow(book)" >
+          <span class="button-inner">Borrow</span>
+        </ion-button>
+      </div> -->
+      <div style="margin-left: auto;">
+        <ion-button clear (click)="CheckAvailability(book)" >
+          <span class="button-inner">CheckAvailability</span>
+        </ion-button>
+      </div>
     </ion-item>
   </ion-list>
 </ion-content>
