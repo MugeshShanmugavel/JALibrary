@@ -14,6 +14,7 @@ export class Tab2Page implements OnInit{
 
   data:any;
   userId:any;
+  books:any;
   ngOnInit(){
     this.userId = this.cookie.get('UserId');
     this.showBooks(this.userId);
@@ -25,6 +26,8 @@ export class Tab2Page implements OnInit{
     this.BookServices.AllBooks(userId).subscribe(res => {
       this.data = res;
       console.log(this.data);
+      this.books = this.data.booksBorrowed;
+      console.log('data', this.books)
     });
   }
 

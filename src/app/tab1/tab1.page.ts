@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { UserProfile } from '../Models/UserProfile';
 
 import { BookService } from '../../Services/book.service';
+import {TabsPage} from '../tabs/tabs.page';
 
 @Component({
   selector: 'app-tab1',
@@ -13,34 +14,21 @@ import { BookService } from '../../Services/book.service';
 })
 export class Tab1Page {
 
-  constructor(public navCtrl : NavController, public BookServices:BookService, public cookie:CookieService, public alertController:AlertController) {}
+  constructor(public navCtrl : NavController, public BookServices:BookService, public cookie:CookieService, public alertController:AlertController, public tabs:TabsPage) {
+    this.showAllAvailableBooks();
+  }
   
-  async scan(isbn:string){
-    var UserId = this.cookie.get('UserId');
-    var UserName = this.cookie.get('UserName');
-    if(UserId!="" && UserName!=""){
-       this.BookServices.Borrow(isbn, UserId);
-      }
-    else{
-      const alert = this.alertController.create({
-        inputs:[{name : 'UserId', placeholder:'Enter your JAId', type:'text'},
-          {name : 'UserName', placeholder:'Enter your User Name', type:'text'}],
-        buttons : [
-          {
-            text:'Ok',
-            handler : (data) => {this.setCookie(data);}
-          }
-        ]
-      });
-      (await alert).present();
-      this.BookServices.Borrow(isbn, UserId);
-    }
+  booksAvailable:any;
+  showAllAvailableBooks(){
+    this.BookServices.AllAvailableBooks().subscribe(res=> {
+      this.booksAvailable = res;
+      console.log(this.booksAvailable);
+    })
   }
 
-  setCookie(name:UserProfile){
-    console.log(name.UserId);
-    console.log(JSON.stringify(name));
-    this.cookie.set('UserId', name.UserId);
-    this.cookie.set('UserName', name.UserName);
+  borrow(book:any){
+    var userId = this.cookie.get('UserId');
+    this.BookServices.Borrow(book.isbn, userId);   
+    this.showAllAvailableBooks();
   }
 }
