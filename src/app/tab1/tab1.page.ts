@@ -14,26 +14,28 @@ import { BookService } from '../../Services/book.service';
 export class Tab1Page {
 
   constructor(public navCtrl : NavController, public BookServices:BookService, public cookie:CookieService, public alertController:AlertController) {}
-  // async scan(isbn:string){
-  //   var UserId = this.cookie.get('UserId');
-  //   var UserName = this.cookie.get('UserName');
-  //   if(UserId!="" && UserName!=""){
-
-  //      this.BookServices.Borrow(isbn, UserId);}
-  //   else{
-  //     const alert = this.alertController.create(
-  //       {inputs:[{name : 'UserId', placeholder:'Enter your JAId', type:'text'},
-  //         {name : 'UserName', placeholder:'Enter your JAName', type:'text'}],
-  //       buttons : [
-  //         {
-  //           text:'Ok',
-  //           handler : (data) => {this.setCookie(data);}
-  //         }
-  //       ]
-  //     });
-  //     (await alert).present();
-  //   }
-  // }
+  
+  async scan(isbn:string){
+    var UserId = this.cookie.get('UserId');
+    var UserName = this.cookie.get('UserName');
+    if(UserId!="" && UserName!=""){
+       this.BookServices.Borrow(isbn, UserId);
+      }
+    else{
+      const alert = this.alertController.create({
+        inputs:[{name : 'UserId', placeholder:'Enter your JAId', type:'text'},
+          {name : 'UserName', placeholder:'Enter your User Name', type:'text'}],
+        buttons : [
+          {
+            text:'Ok',
+            handler : (data) => {this.setCookie(data);}
+          }
+        ]
+      });
+      (await alert).present();
+      this.BookServices.Borrow(isbn, UserId);
+    }
+  }
 
   setCookie(name:UserProfile){
     console.log(name.UserId);

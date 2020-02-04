@@ -9,5 +9,6 @@
 <ion-content>
   <ion-icon slot="start" color="medium" name="book"></ion-icon>
   <ion-label>Ionic Documentation</ion-label>
-  <ion-button ></ion-button>
+  <ion-input type="text" [(ngModel)]="isbn" placeholder="Enter Isbn"></ion-input>
+  <ion-button (click)=scan(isbn)></ion-button>
 </ion-content>
