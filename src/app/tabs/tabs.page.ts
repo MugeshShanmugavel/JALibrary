@@ -37,14 +37,21 @@ export class TabsPage {
     var UserName = this.cookie.get('UserName');
     if(UserId=="" && UserName==""){
       const alert = this.alertController.create({
-        inputs:[{name : 'UserId', placeholder:'Enter your JAId', type:'text'},
+        message:'<b><i>Enter JA Id and Name</i></b>',
+        inputs:[{name : 'UserId', placeholder:'Enter your JA Id', type:'text'},
           {name : 'Name', placeholder:'Enter your User Name', type:'text'}],
         buttons : [
           {
-            text:'Ok',
+            text:'OK',
             handler : (data) => 
               {
-                this.setCookie(data); 
+                if(data.UserId != "" && data.Name != "")
+                {
+                  this.setCookie(data);
+                }
+                else{                 
+                  this.getDataFromCookie();
+                } 
               }
           }
         ]
@@ -68,9 +75,6 @@ export class TabsPage {
      }
   }
   setCookie(name:UserProfile){
-    console.log(name.UserId);
-    console.log(name.Name);
-    console.log(JSON.stringify(name));
     this.cookie.set('UserId', name.UserId);
     this.cookie.set('UserName', name.Name);
     this.bookService.AddUser(name.UserId, name.Name);

@@ -36,6 +36,10 @@ export class Tab1Page {
   }
 
   async CheckAvailability(book:any){
+    if(this.cookie.get('UserId')==""){
+      this.tabs.getDataFromCookie();
+    }
+    else{
     console.log(book);
     this.BookServices.CheckAvailability(book.isbn).subscribe(async res=>{
       console.log(res);
@@ -73,7 +77,7 @@ export class Tab1Page {
       }
     })
   }
-
+  }
   getItems(ev:any)
   {
     const value = ev.target.value;
